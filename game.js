@@ -47,12 +47,22 @@ function deal () {
     player1.hand.push(gotCard);
     }
   }
+  console.log(player1.hand);
 }
 
 function deal2 () {
     //player2 hand
-    player2.hand.push(deck);
-    console.log(player2.hand);
+  for (var i = 0, len = 26; i < len; i++) {
+    getCard = Math.floor(Math.random() * 51)
+    if (deck[getCard]===undefined && i != 27) {
+      i = i - 1;
+    } else {
+    gotCard = deck[getCard];
+    deck.splice(getCard, 1);
+    player2.hand.push(gotCard);
+    }
+  }
+  console.log(player2.hand);
 }
 
 clubs = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], 'club', [,,,,,,,,,,,,]);
