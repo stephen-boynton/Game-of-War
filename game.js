@@ -30,8 +30,10 @@ function init () {
 };
 
 function createDeck() {
+  //two decks, one to distribute and one to compare against
   deck = clubs.suitAssign.concat(diamonds.suitAssign, spades.suitAssign, hearts.suitAssign);
-  deckCopy = deck;
+  deckCopy = clubs.suitAssign.concat(diamonds.suitAssign, spades.suitAssign, hearts.suitAssign);;
+  //Deck order is important [0-12 = clubs, 13-25 = diamonds, 26-39 = spades, 40-52 = hearts]
 }
 
 function deal () {
@@ -65,6 +67,53 @@ function deal2 () {
   console.log(player2.hand);
 }
 
+function round () {
+  console.log("Round!")
+  //player1 value
+  player1Card = player1.hand.pop();
+  console.log(player1Card);
+  player1CardInDeck = deckCopy.indexOf(player1Card);
+  if (player1CardInDeck < 13) {
+    player1Value = clubs.suitAssign.indexOf(player1Card) + 2;
+    console.log(player1Value);
+  } else if (player1CardInDeck > 12 && player1CardInDeck < 26) {
+    player1Value = diamonds.suitAssign.indexOf(player1Card ) + 2;
+    console.log(player1Value);
+  } else if (player1CardInDeck > 25 && player1CardInDeck < 40) {
+    player1Value = spades.suitAssign.indexOf(player1Card ) + 2;
+    console.log(player1Value);
+  } else {
+    player1Value = hearts.suitAssign.indexOf(player1Card ) + 2;
+    console.log(player1Value);
+  }
+  //player2 value
+  player2Card = player2.hand.pop();
+  console.log(player2Card);
+  player2CardInDeck = deckCopy.indexOf(player2Card);
+  if (player2CardInDeck < 13) {
+    player2Value = clubs.suitAssign.indexOf(player2Card) + 2;
+    console.log(player2Value)
+  } else if (player2CardInDeck > 12 && player2CardInDeck < 26) {
+    player2Value = diamonds.suitAssign.indexOf(player2Card) + 2;
+    console.log(player2Value)
+  } else if (player2CardInDeck > 25 && player2CardInDeck < 40) {
+    player2Value = spades.suitAssign.indexOf(player2Card) + 2;
+    console.log(player2Value)
+  } else {
+    player2Value = hearts.suitAssign.indexOf(player2Card) + 2;
+    console.log(player1Value)
+  }
+  if (player1Value > player2Value) {
+    console.log("Player1 Wins this round!")
+    player1.hand.unshift(player2Card);
+    console.log(player1.hand);
+  } else if (player2Value > player1Value) {
+    console.log("Player 2 wins this round!")
+    player2.hand.unshift(player1Card);
+    console.log(player2.hand);
+  }
+}
+
 clubs = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], 'club', [,,,,,,,,,,,,]);
 
 hearts = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], 'heart', [,,,,,,,,,,,,]);
@@ -81,3 +130,4 @@ init();
 createDeck();
 deal();
 deal2();
+document.querySelector('#attack').addEventListener('click', round)
