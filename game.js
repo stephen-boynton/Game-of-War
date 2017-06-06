@@ -67,9 +67,7 @@ function deal2 () {
   console.log(player2.hand);
 }
 
-function round () {
-  console.log("Round!")
-  //player1 value
+function findPlayer1Value () {
   player1Card = player1.hand.pop();
   console.log(player1Card);
   player1CardInDeck = deckCopy.indexOf(player1Card);
@@ -86,7 +84,9 @@ function round () {
     player1Value = hearts.suitAssign.indexOf(player1Card ) + 2;
     console.log(player1Value);
   }
-  //player2 value
+}
+
+function findPlayer2Value () {
   player2Card = player2.hand.pop();
   console.log(player2Card);
   player2CardInDeck = deckCopy.indexOf(player2Card);
@@ -101,17 +101,58 @@ function round () {
     console.log(player2Value)
   } else {
     player2Value = hearts.suitAssign.indexOf(player2Card) + 2;
-    console.log(player1Value)
+    console.log(player2Value);
   }
+}
+
+function round () {
+  console.log("Round!")
+  //player1 value
+  findPlayer1Value();
+  //player2 value
+  findPlayer2Value();
   if (player1Value > player2Value) {
     console.log("Player1 Wins this round!")
     player1.hand.unshift(player2Card);
+    player1.hand.unshift(player1Card);
     console.log(player1.hand);
   } else if (player2Value > player1Value) {
     console.log("Player 2 wins this round!")
     player2.hand.unshift(player1Card);
+    player2.hand.unshift(player2Card);
+    console.log(player2.hand);
+  } else if (player1Value === player2Value) {
+    war();
+  }
+}
+
+function war () {
+  player1WarCards = player1.hand.length - 3;
+  player1WarArray = player1.hand.splice(player1WarCards, 3);
+  console.log (player1WarArray);
+  player2WarCards = player2.hand.length - 3;
+  player2WarArray = player2.hand.splice(player2WarCards, 3);
+  console.log (player2WarArray);
+  findPlayer1Value();
+  findPlayer2Value();
+  if (player1Value > player2Value) {
+    console.log("Player 1 has won the WAR!")
+    for (var i = 0, len = player1WarArray.length; i < len; i++) {
+      player1.hand.unshift(player2WarArray[i]);
+      player1.hand.unshift(player1WarArray[i]);
+    }
+    player1.hand.unshift(player2Card, player1Card);
+    console.log(player1.hand);
+  } else if (player2Value > player1Value) {
+    console.log("Player 2 has won the WAR!")
+    for (var i = 0, len = player1WarArray.length; i < len; i++) {
+      player2.hand.unshift(player2WarArray[i]);
+      player2.hand.unshift(player1WarArray[i]);
+    }
+    player2.hand.unshift(player2Card, player1Card);
     console.log(player2.hand);
   }
+
 }
 
 clubs = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], 'club', [,,,,,,,,,,,,]);
