@@ -1,5 +1,5 @@
-//The Deck
-var player1, player2, deck, clubs, diamonds, spades, hearts;
+//the variables
+var player1, player2, deck, clubs, diamonds, spades, hearts, warState, roundState, player1Count, player2Count;
 
 //Created a blank suit that has the properties a suit would have
 //The suitAssign is to hold the combined values of suit and card.
@@ -10,23 +10,27 @@ var SuitDeck = function (cards, suit, suitAssign) {
   this.suitAssign = suitAssign;
 };
 
+//blank players
 var Player = function (hand, cardNum) {
   this.hand = hand;
   this.cardNum = cardNum;
 };
 
-//assigned this combining function to the prototype, this results in suitAssign value.
+//assigned this combining function to the prototype, this results in suitAssign value. To build the deck
 SuitDeck.prototype.assignSuit = function () {
   for (var i = 0, len = this.cards.length; i < len; i++) {
     this.suitAssign[i] = this.suit + this.cards[i];
   }
 }
-
+//The game itself
 function init () {
   clubs.assignSuit();
   hearts.assignSuit();
   spades.assignSuit();
   diamonds.assignSuit();
+  createDeck();
+  deal();
+  deal2();
 };
 
 function createDeck() {
@@ -65,6 +69,24 @@ function deal2 () {
     }
   }
   console.log(player2.hand);
+  roundStateActive();
+}
+
+function playerDeckCount () {
+  //Display how many cards are in each persons hand
+  //player1
+  player1Count = player.hand.length;
+  console.log(player1Count);
+  //player2
+  player2Count = player2.hand.length;
+  console.log(player2Count);
+  //Check for a winner
+}
+
+function roundStateActive () {
+  roundState = true;
+  document.querySelector('.attack').classList.add('active');
+  document.querySelector('.attack').addEventListener('click', round)
 }
 
 function findPlayer1Value () {
@@ -106,54 +128,72 @@ function findPlayer2Value () {
 }
 
 function round () {
-  console.log("Round!")
-  //player1 value
-  findPlayer1Value();
-  //player2 value
-  findPlayer2Value();
-  if (player1Value > player2Value) {
-    console.log("Player1 Wins this round!")
-    player1.hand.unshift(player2Card);
-    player1.hand.unshift(player1Card);
-    console.log(player1.hand);
-  } else if (player2Value > player1Value) {
-    console.log("Player 2 wins this round!")
-    player2.hand.unshift(player1Card);
-    player2.hand.unshift(player2Card);
-    console.log(player2.hand);
-  } else if (player1Value === player2Value) {
-    war();
+  if (roundState === true) {
+    console.log("Round!")
+    //player1 value
+    findPlayer1Value();
+    //player2 value
+    findPlayer2Value();
+    if (player1Value > player2Value) {
+      console.log("Player1 Wins this round!")
+      player1.hand.unshift(player2Card);
+      player1.hand.unshift(player1Card);
+      console.log(player1.hand);
+    } else if (player2Value > player1Value) {
+      console.log("Player 2 wins this round!")
+      player2.hand.unshift(player1Card);
+      player2.hand.unshift(player2Card);
+      console.log(player2.hand);
+    } else if (player1Value === player2Value) {
+      warState = true;
+      roundState = false;
+      document.querySelector('.attack').classList.remove('active');
+      document.querySelector('.war').classList.add('active');
+      document.querySelector('.war').addEventListener('click', war)
+      }
+    }
   }
-}
-
 function war () {
-  player1WarCards = player1.hand.length - 3;
-  player1WarArray = player1.hand.splice(player1WarCards, 3);
-  console.log (player1WarArray);
-  player2WarCards = player2.hand.length - 3;
-  player2WarArray = player2.hand.splice(player2WarCards, 3);
-  console.log (player2WarArray);
-  findPlayer1Value();
-  findPlayer2Value();
-  if (player1Value > player2Value) {
-    console.log("Player 1 has won the WAR!")
-    for (var i = 0, len = player1WarArray.length; i < len; i++) {
-      player1.hand.unshift(player2WarArray[i]);
-      player1.hand.unshift(player1WarArray[i]);
+  if (warState === true) {
+    //activate War button
+    document.querySelector('.war').classList.remove('active');
+    //player1 adds cards to the pile
+    player1WarCards = player1.hand.length - 3;
+    player1WarArray = player1.hand.splice(player1WarCards, 3);
+    console.log (player1WarArray);
+    //player2 adds cards to the pile
+    player2WarCards = player2.hand.length - 3;
+    player2WarArray = player2.hand.splice(player2WarCards, 3);
+    console.log (player2WarArray);
+    //flip and compare cards
+    findPlayer1Value();
+    findPlayer2Value();
+    //determine winner and who gets cards
+    if (player1Value > player2Value) {
+      //player1 wins
+      console.log("Player 1 has won the WAR!")
+      for (var i = 0, len = player1WarArray.length; i < len; i++) {
+        player1.hand.unshift(player2WarArray[i]);
+        player1.hand.unshift(player1WarArray[i]);
+      }
+      player1.hand.unshift(player2Card, player1Card);
+      console.log(player1.hand);
+      warState = false;
+      roundStateActive();
+    } else if (player2Value > player1Value) {
+      //player2 wins
+      console.log("Player 2 has won the WAR!")
+      for (var i = 0, len = player1WarArray.length; i < len; i++) {
+        player2.hand.unshift(player2WarArray[i]);
+        player2.hand.unshift(player1WarArray[i]);
+      }
+      player2.hand.unshift(player2Card, player1Card);
+      console.log(player2.hand);
+      warState = false;
+      roundStateActive()
     }
-    player1.hand.unshift(player2Card, player1Card);
-    console.log(player1.hand);
-  } else if (player2Value > player1Value) {
-    console.log("Player 2 has won the WAR!")
-    for (var i = 0, len = player1WarArray.length; i < len; i++) {
-      player2.hand.unshift(player2WarArray[i]);
-      player2.hand.unshift(player1WarArray[i]);
     }
-    player2.hand.unshift(player2Card, player1Card);
-    console.log(player2.hand);
   }
-
-}
 
 clubs = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], 'club', [,,,,,,,,,,,,]);
 
@@ -168,7 +208,3 @@ player2 = new Player ([], '');
 
 
 init();
-createDeck();
-deal();
-deal2();
-document.querySelector('#attack').addEventListener('click', round)

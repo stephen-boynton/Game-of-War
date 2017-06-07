@@ -1,7 +1,20 @@
-#attack {
+.attack {
   width: 100px;
   height: 50px;
-  background: red;
+  background: grey;
   color: white;
   text-transform: capitalize;
+}
+
+.war {
+  width: 100px;
+  height: 50px;
+  background: grey;
+  color: white;
+  text-transform: capitalize;
+}
+
+.active {
+  background: red;
+  font-weight: bold;
 }
