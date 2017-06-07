@@ -150,32 +150,49 @@ function findPlayer2Value () {
 
 function round () {
   if (roundState === true) {
-    console.log("Round!")
+    leaveWarMode();
+    playerDeckCount();
+    document.querySelector('#player-1-score').style.fontSize='20px';
+    document.querySelector('#player-2-score').style.fontSize='20px';
     //player1 value
     findPlayer1Value();
     //player2 value
     findPlayer2Value();
     displayCards();
     if (player1Value > player2Value) {
-      console.log("Player1 Wins this round!")
+      document.querySelector('#player-1-score').style.fontSize='50px';
       player1.hand.unshift(player2Card);
       player1.hand.unshift(player1Card);
-      console.log(player1.hand);
     } else if (player2Value > player1Value) {
-      console.log("Player 2 wins this round!")
+      document.querySelector('#player-2-score').style.fontSize='50px';
       player2.hand.unshift(player1Card);
       player2.hand.unshift(player2Card);
-      console.log(player2.hand);
     } else if (player1Value === player2Value) {
-      warState = true;
-      roundState = false;
-      document.querySelector('.attack').classList.remove('active');
-      document.querySelector('.war').classList.add('active');
-      document.querySelector('.war').addEventListener('click', war)
+      enterWarMode();
       }
       playerDeckCount();
     }
   }
+
+//visual representatio of entering WAR
+function enterWarMode() {
+  warState = true;
+  roundState = false;
+  document.querySelector('.background').style.backgroundImage='url("img/war.jpg")';
+  document.querySelector('.play-area').style.backgroundColor='rgba(0, 0, 0, 0.5)';
+  document.querySelector('header').style.color='white';
+  document.querySelector('.attack').classList.remove('active');
+  document.querySelector('.war').classList.add('active');
+  document.querySelector('.war').addEventListener('click', war)
+}
+
+//returns visuals back to normal
+function leaveWarMode() {
+  document.querySelector('.background').style.backgroundImage='url("img/b2.jpeg")';
+  document.querySelector('.play-area').style.backgroundColor='rgba(255, 0, 0, 0.5)';
+  document.querySelector('header').style.color='red';
+}
+
 function war () {
   if (warState === true) {
     //activate War button
@@ -191,19 +208,19 @@ function war () {
     //flip and compare cards
     findPlayer1Value();
     findPlayer2Value();
+    displayCards();
     //determine winner and who gets cards
     if (player1Value > player2Value) {
       //player1 wins
-      console.log("Player 1 has won the WAR!")
       for (var i = 0, len = player1WarArray.length; i < len; i++) {
         player1.hand.unshift(player2WarArray[i]);
         player1.hand.unshift(player1WarArray[i]);
       }
       player1.hand.unshift(player2Card, player1Card);
-      console.log(player1.hand);
+      document.querySelector('#player-1-score').style.fontSize='30px';
+      document.querySelector('#player-1-score').textContent='This War is Yours!';
       warState = false;
       roundStateActive();
-      playerDeckCount();
     } else if (player2Value > player1Value) {
       //player2 wins
       console.log("Player 2 has won the WAR!")
@@ -212,10 +229,10 @@ function war () {
         player2.hand.unshift(player1WarArray[i]);
       }
       player2.hand.unshift(player2Card, player1Card);
-      console.log(player2.hand);
+      document.querySelector('#player-2-score').style.fontSize='30px';
+      document.querySelector('#player-2-score').textContent='This War is Theirs!';
       warState = false;
       roundStateActive();
-      playerDeckCount();
     }
     }
   }
