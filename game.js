@@ -215,11 +215,11 @@ function war () {
     document.querySelector('.war').classList.remove('active');
     //player1 adds cards to the pile
     player1WarCards = player1.hand.length - 3;
-    player1WarArray = player1.hand.splice(player1WarCards, 3);
+    player1WarArray = player1.hand.splice(player1WarCards - 1, 3);
     console.log (player1WarArray);
     //player2 adds cards to the pile
     player2WarCards = player2.hand.length - 3;
-    player2WarArray = player2.hand.splice(player2WarCards, 3);
+    player2WarArray = player2.hand.splice(player2WarCards - 1, 3);
     console.log (player2WarArray);
     //flip and compare cards
     displayWarChest();
@@ -229,7 +229,7 @@ function war () {
     //determine winner and who gets cards
     if (player1Value > player2Value) {
       //player1 wins
-      for (var i = 0, len = player1WarArray.length; i < len; i++) {
+      for (var i = 0, len = player1WarArray.length + 1; i < len; i++) {
         player1.hand.unshift(player2WarArray[i]);
         player1.hand.unshift(player1WarArray[i]);
       }
