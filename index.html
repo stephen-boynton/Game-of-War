@@ -9,20 +9,22 @@
     <div class = "background">
       <header><h1>WAR</h1></header>
       <section class="play-area">
+        <div class="scorebox">
+          <p>YOU</p>
+          <p class="user-score"><span id="player-1-score"> 26</span></p>
+        </div>
         <img class="player-1-Card" src="">
         <img class="player-2-Card" src="">
+        <div class="scorebox">
+          <p>THEM</p>
+          <p><span id="player-2-score"> 26</span></p>
+        </div>
       </section>
       <section class="buttons">
         <button class="attack">Attack!</button>
         <button class="war">Go to WAR!</button>
       </section>
-      <div class ="scorediv">
-        <div class="scorebox">
-          <p class="user-score">Your Cards: <span id="player-1-score"> 26</span></p>
-          <p>Arch-Nemesis' Cards: <span id="player-2-score"> 26</span></p>
-        </div>
       </div>
-    </div>
     <script src="game.js"></script>
   </body>
 </html>
