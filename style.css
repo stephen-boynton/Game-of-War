@@ -83,3 +83,23 @@ p {
   width: 100%;
   height: 800px;
 }
+
+#warchest1 {
+  display: none;
+}
+
+#warchest2 {
+  display: none;
+}
+
+#warchest1 img {
+  width: 70px;
+  height: 110px;
+  display: inline-block;
+}
+
+#warchest2 img {
+  width: 70px;
+  height: 110px;
+  display: inline-block;
+}

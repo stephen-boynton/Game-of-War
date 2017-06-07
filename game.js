@@ -108,6 +108,19 @@ function displayCards (){
   document.querySelector('.player-2-Card').src="cards/"+player2Card+'.png';
 }
 
+
+//see the cards that are up for grabs during War Round
+function displayWarChest (){
+  document.querySelector('#warchest1').style.display='flex';
+  document.querySelector('#warchest2').style.display='flex';
+  document.querySelector('#p1WarCard1').src="cards/"+player1WarArray[0]+'.png';
+  document.querySelector('#p1WarCard2').src="cards/"+player1WarArray[1]+'.png';
+  document.querySelector('#p1WarCard3').src="cards/"+player1WarArray[2]+'.png';
+  document.querySelector('#p2WarCard1').src="cards/"+player2WarArray[0]+'.png';
+  document.querySelector('#p2WarCard2').src="cards/"+player2WarArray[1]+'.png';
+  document.querySelector('#p2WarCard3').src="cards/"+player2WarArray[2]+'.png';
+}
+
 //associate the card with the original index value you in the suit
 function findPlayer1Value () {
   player1Card = player1.hand.pop();
@@ -147,9 +160,11 @@ function findPlayer2Value () {
     console.log(player2Value);
   }
 }
-
+//this is the function for the nomral rounds
 function round () {
   if (roundState === true) {
+    document.querySelector('#warchest1').style.display='none';
+    document.querySelector('#warchest2').style.display='none';
     leaveWarMode();
     playerDeckCount();
     document.querySelector('#player-1-score').style.fontSize='20px';
@@ -193,6 +208,7 @@ function leaveWarMode() {
   document.querySelector('header').style.color='red';
 }
 
+//This is the function for the War round
 function war () {
   if (warState === true) {
     //activate War button
@@ -206,6 +222,7 @@ function war () {
     player2WarArray = player2.hand.splice(player2WarCards, 3);
     console.log (player2WarArray);
     //flip and compare cards
+    displayWarChest();
     findPlayer1Value();
     findPlayer2Value();
     displayCards();
@@ -237,6 +254,8 @@ function war () {
     }
   }
 
+
+//created the suits here
 clubs = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], 'club', [,,,,,,,,,,,,]);
 
 hearts = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], 'heart', [,,,,,,,,,,,,]);
@@ -245,6 +264,7 @@ spades = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 
 
 diamonds = new SuitDeck (['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'], 'diamond', [,,,,,,,,,,,,]);
 
+//created the players here
 player1 = new Player ([], '');
 player2 = new Player ([], '');
 
