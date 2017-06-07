@@ -94,12 +94,21 @@ function playerDeckCount () {
   }
 }
 
+//prevents player from clicking Attack! unless active
 function roundStateActive () {
   roundState = true;
   document.querySelector('.attack').classList.add('active');
   document.querySelector('.attack').addEventListener('click', round)
 }
 
+
+//link the png to the value of the card played
+function displayCards (){
+  document.querySelector('.player-1-Card').src="cards/"+player1Card+'.png';
+  document.querySelector('.player-2-Card').src="cards/"+player2Card+'.png';
+}
+
+//associate the card with the original index value you in the suit
 function findPlayer1Value () {
   player1Card = player1.hand.pop();
   console.log(player1Card);
@@ -119,6 +128,7 @@ function findPlayer1Value () {
   }
 }
 
+//same as player1 above
 function findPlayer2Value () {
   player2Card = player2.hand.pop();
   console.log(player2Card);
@@ -145,6 +155,7 @@ function round () {
     findPlayer1Value();
     //player2 value
     findPlayer2Value();
+    displayCards();
     if (player1Value > player2Value) {
       console.log("Player1 Wins this round!")
       player1.hand.unshift(player2Card);

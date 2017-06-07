@@ -12,9 +12,18 @@ header {
 
 .play-area {
   height: 300px;
-  width: 150px;
+  width: 100%;
+  margin: 25px 0px;
+  padding-left: 25px;
+  background-color: rgba(255, 0, 0, 0.5);
   display: flex;
-  justify-content:
+  justify-content: center;
+}
+
+.play-area img {
+  width:250px;
+  padding: 0px 10px;
+  height: auto;
 }
 
 .buttons {
@@ -30,8 +39,8 @@ header {
 }
 
 .scorebox {
-  width: 200px;
-  height: 100px;
+  width: 250px;
+  height: 150px;
   border-radius: 20px;
   color: white;
   background-color: rgba(0, 0, 0, 0.5);
@@ -68,7 +77,7 @@ p {
 .background {
   display: flex;
   flex-direction: column;
-  align-content: center;
+  justify-content: center;
   background-image: url('img/b2.jpeg');
   background-repeat: no-repeat;
   width: 100%;
