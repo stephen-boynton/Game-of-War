@@ -75,12 +75,23 @@ function deal2 () {
 function playerDeckCount () {
   //Display how many cards are in each persons hand
   //player1
-  player1Count = player.hand.length;
+  player1Count = player1.hand.length;
   console.log(player1Count);
+  document.querySelector('#player-1-score').textContent=player1Count;
   //player2
   player2Count = player2.hand.length;
   console.log(player2Count);
+  document.querySelector('#player-2-score').textContent=player2Count;
   //Check for a winner
+  if (player1Count === 0){
+    roundState = false;
+    warState = false;
+    document.querySelector('#player-2-score').textContent='Player 2 Wins!';
+  } else if (player2Count === 0) {
+    roundState = false;
+    warState = false;
+    document.querySelector('#player-1-score').textContent='Player 1 Wins!';
+  }
 }
 
 function roundStateActive () {
@@ -151,6 +162,7 @@ function round () {
       document.querySelector('.war').classList.add('active');
       document.querySelector('.war').addEventListener('click', war)
       }
+      playerDeckCount();
     }
   }
 function war () {
@@ -180,6 +192,7 @@ function war () {
       console.log(player1.hand);
       warState = false;
       roundStateActive();
+      playerDeckCount();
     } else if (player2Value > player1Value) {
       //player2 wins
       console.log("Player 2 has won the WAR!")
@@ -190,7 +203,8 @@ function war () {
       player2.hand.unshift(player2Card, player1Card);
       console.log(player2.hand);
       warState = false;
-      roundStateActive()
+      roundStateActive();
+      playerDeckCount();
     }
     }
   }
