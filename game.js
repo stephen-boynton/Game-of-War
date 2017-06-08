@@ -56,7 +56,6 @@ function deal () {
     player1.hand.push(gotCard);
     }
   }
-  console.log(player1.hand);
 }
 
 function deal2 () {
@@ -71,7 +70,6 @@ function deal2 () {
     player2.hand.push(gotCard);
     }
   }
-  console.log(player2.hand);
   roundStateActive();
 }
 
@@ -79,11 +77,9 @@ function playerDeckCount () {
   //Display how many cards are in each persons hand
   //player1
   player1Count = player1.hand.length;
-  console.log(player1Count);
   document.querySelector('#player-1-score').textContent=player1Count;
   //player2
   player2Count = player2.hand.length;
-  console.log(player2Count);
   document.querySelector('#player-2-score').textContent=player2Count;
   //Check for a winner
   if (player1Count === 0){
@@ -127,40 +123,30 @@ function displayWarChest (){
 //associate the card with the original index value you in the suit
 function findPlayer1Value () {
   player1Card = player1.hand.pop();
-  console.log(player1Card);
   player1CardInDeck = deckCopy.indexOf(player1Card);
   if (player1CardInDeck < 13) {
     player1Value = clubs.suitAssign.indexOf(player1Card) + 2;
-    console.log(player1Value);
   } else if (player1CardInDeck > 12 && player1CardInDeck < 26) {
     player1Value = diamonds.suitAssign.indexOf(player1Card ) + 2;
-    console.log(player1Value);
   } else if (player1CardInDeck > 25 && player1CardInDeck < 40) {
     player1Value = spades.suitAssign.indexOf(player1Card ) + 2;
-    console.log(player1Value);
   } else {
     player1Value = hearts.suitAssign.indexOf(player1Card ) + 2;
-    console.log(player1Value);
   }
 }
 
 //same as player1 above
 function findPlayer2Value () {
   player2Card = player2.hand.pop();
-  console.log(player2Card);
   player2CardInDeck = deckCopy.indexOf(player2Card);
   if (player2CardInDeck < 13) {
     player2Value = clubs.suitAssign.indexOf(player2Card) + 2;
-    console.log(player2Value)
   } else if (player2CardInDeck > 12 && player2CardInDeck < 26) {
     player2Value = diamonds.suitAssign.indexOf(player2Card) + 2;
-    console.log(player2Value)
   } else if (player2CardInDeck > 25 && player2CardInDeck < 40) {
     player2Value = spades.suitAssign.indexOf(player2Card) + 2;
-    console.log(player2Value)
   } else {
     player2Value = hearts.suitAssign.indexOf(player2Card) + 2;
-    console.log(player2Value);
   }
 }
 //this is the function for the nomral rounds
@@ -217,48 +203,32 @@ function leaveWarMode() {
 //This is the function for the War round
 function war () {
   if (warState === true) {
-    console.log(player1.hand);
     displayCards();
-    console.log(player1.hand);
     //activate War button
     document.querySelector('.war').classList.remove('active');
-    console.log(player1.hand);
     //player1 adds cards to the pile
     player1WarArray = player1.hand.splice(player1.hand.length-4, 4);
-    console.log(player1.hand);
-    console.log (player1WarArray);
     //player2 adds cards to the pile
     player2WarArray = player2.hand.splice(player2.hand.length-4, 4);
-    console.log(player1.hand);
-    console.log (player2WarArray);
     //flip and compare cards
     displayWarChest();
-    console.log(player1.hand);
     findPlayer1Value();
-    console.log(player1.hand);
     findPlayer2Value();
-    console.log(player1.hand);
     displayCards();
-    console.log(player1.hand);
     //determine winner and who gets cards
     if (player1Value > player2Value) {
       //player1 wins
-      console.log(player1.hand);
       for (var i = 0, len = player1WarArray.length; i < len; i++) {
         player1.hand.unshift(player2WarArray[i]);
         player1.hand.unshift(player1WarArray[i]);
-        console.log(player1.hand);
       }
       player1.hand.unshift(player2Card, player1Card);
-      console.log(player1.hand);
       document.querySelector('#player-1-score').style.fontSize='30px';
       document.querySelector('#player-1-score').textContent='This War is Yours!';
       warState = false;
       roundStateActive();
-      console.log(player1.hand);
     } else if (player2Value > player1Value) {
       //player2 wins
-        console.log("Player 2 has won the WAR!")
         for (var i = 0, len = player1WarArray.length; i < len; i++) {
           player2.hand.unshift(player2WarArray[i]);
           player2.hand.unshift(player1WarArray[i]);
