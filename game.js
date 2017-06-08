@@ -1,5 +1,8 @@
 //the variables
-var player1, player2, deck, clubs, diamonds, spades, hearts, warState, roundState, player1Count, player2Count;
+var player1, player2, deck, clubs, diamonds, spades, hearts, warState, roundState, player1Count, player2Count, player1Card, player2Card;
+
+var player1WarArray = [];
+var player2WarArray = [];
 
 //Created a blank suit that has the properties a suit would have
 //The suitAssign is to hold the combined values of suit and card.
@@ -163,6 +166,7 @@ function findPlayer2Value () {
 //this is the function for the nomral rounds
 function round () {
   if (roundState === true) {
+    //hiding the War Chest imgages and returningt o Round mode
     document.querySelector('#warchest1').style.display='none';
     document.querySelector('#warchest2').style.display='none';
     leaveWarMode();
@@ -183,6 +187,8 @@ function round () {
       player2.hand.unshift(player1Card);
       player2.hand.unshift(player2Card);
     } else if (player1Value === player2Value) {
+      player1.hand.push(player1Card);
+      player2.hand.push(player2Card);
       enterWarMode();
       }
       playerDeckCount();
@@ -211,15 +217,14 @@ function leaveWarMode() {
 //This is the function for the War round
 function war () {
   if (warState === true) {
+    displayCards();
     //activate War button
     document.querySelector('.war').classList.remove('active');
     //player1 adds cards to the pile
-    player1WarCards = player1.hand.length - 3;
-    player1WarArray = player1.hand.splice(player1WarCards - 1, 3);
+    player1WarArray = player1.hand.splice(player1.hand.length-4, 4);
     console.log (player1WarArray);
     //player2 adds cards to the pile
-    player2WarCards = player2.hand.length - 3;
-    player2WarArray = player2.hand.splice(player2WarCards - 1, 3);
+    player2WarArray = player2.hand.splice(player2.hand.length-4, 4);
     console.log (player2WarArray);
     //flip and compare cards
     displayWarChest();
@@ -245,7 +250,7 @@ function war () {
         player2.hand.unshift(player2WarArray[i]);
         player2.hand.unshift(player1WarArray[i]);
       }
-      player2.hand.unshift(player2Card, player1Card);
+      player2.hand.unshift(player1Card, player2Card);
       document.querySelector('#player-2-score').style.fontSize='30px';
       document.querySelector('#player-2-score').textContent='This War is Theirs!';
       warState = false;
