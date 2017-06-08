@@ -217,45 +217,58 @@ function leaveWarMode() {
 //This is the function for the War round
 function war () {
   if (warState === true) {
+    console.log(player1.hand);
     displayCards();
+    console.log(player1.hand);
     //activate War button
     document.querySelector('.war').classList.remove('active');
+    console.log(player1.hand);
     //player1 adds cards to the pile
     player1WarArray = player1.hand.splice(player1.hand.length-4, 4);
+    console.log(player1.hand);
     console.log (player1WarArray);
     //player2 adds cards to the pile
     player2WarArray = player2.hand.splice(player2.hand.length-4, 4);
+    console.log(player1.hand);
     console.log (player2WarArray);
     //flip and compare cards
     displayWarChest();
+    console.log(player1.hand);
     findPlayer1Value();
+    console.log(player1.hand);
     findPlayer2Value();
+    console.log(player1.hand);
     displayCards();
+    console.log(player1.hand);
     //determine winner and who gets cards
     if (player1Value > player2Value) {
       //player1 wins
-      for (var i = 0, len = player1WarArray.length + 1; i < len; i++) {
+      console.log(player1.hand);
+      for (var i = 0, len = player1WarArray.length; i < len; i++) {
         player1.hand.unshift(player2WarArray[i]);
         player1.hand.unshift(player1WarArray[i]);
+        console.log(player1.hand);
       }
       player1.hand.unshift(player2Card, player1Card);
+      console.log(player1.hand);
       document.querySelector('#player-1-score').style.fontSize='30px';
       document.querySelector('#player-1-score').textContent='This War is Yours!';
       warState = false;
       roundStateActive();
+      console.log(player1.hand);
     } else if (player2Value > player1Value) {
       //player2 wins
-      console.log("Player 2 has won the WAR!")
-      for (var i = 0, len = player1WarArray.length; i < len; i++) {
-        player2.hand.unshift(player2WarArray[i]);
-        player2.hand.unshift(player1WarArray[i]);
+        console.log("Player 2 has won the WAR!")
+        for (var i = 0, len = player1WarArray.length; i < len; i++) {
+          player2.hand.unshift(player2WarArray[i]);
+          player2.hand.unshift(player1WarArray[i]);
+        }
+        player2.hand.unshift(player1Card, player2Card);
+        document.querySelector('#player-2-score').style.fontSize='30px';
+        document.querySelector('#player-2-score').textContent='This War is Theirs!';
+        warState = false;
+        roundStateActive();
       }
-      player2.hand.unshift(player1Card, player2Card);
-      document.querySelector('#player-2-score').style.fontSize='30px';
-      document.querySelector('#player-2-score').textContent='This War is Theirs!';
-      warState = false;
-      roundStateActive();
-    }
     }
   }
 
