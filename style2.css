@@ -1,0 +1,58 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+}
+
+#player-1-area {
+  width: 25vw;
+  height: 100vh;
+  background: linear-gradient(#9cc36c, #80a452);
+  border-right: 5px solid grey;
+}
+
+#play-area {
+  width: 50vw;
+  height: 100vh;
+  background: linear-gradient(#ebd7ab, #d2c097);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: space-between;
+}
+
+#player-2-area {
+  height: 100vh;
+  width: 25vw;
+  background: linear-gradient(#f14848, #cb3d3d);
+  display: flex;
+  border-left: 5px solid grey;
+}
+
+#card-landing-pad {
+  width: 30vw;
+  height: 80vh;
+  margin: 10px auto;
+  background: linear-gradient(#99712d, #825f24);
+  border-radius: 15px;
+  border: 10px ridge rgb(84, 84, 84);
+}
+
+.buttons-area {
+  display: flex;
+  width: 100%;
+  height: 10vh;
+  justify-content: center;
+  align-items: center;
+  bottom: 25px;
+}
+
+.action-btn {
+  font-size: 18px;
+  padding: 10px;
+  margin: 10px;
+  bottom: 25px;
+}
